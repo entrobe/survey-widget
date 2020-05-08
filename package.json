@@ -3,7 +3,7 @@
   "files": [
     "build/**/*"
   ],
-  "main": "src/index.js",
+  "main": "build/index.js",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
