@@ -63,7 +63,7 @@ const SurveyComponent = (props) => {
 
   useEffect(() => {
     fetchAnswersAndQuestionsCallback(true);
-  }, []);
+  }, [fetchAnswersAndQuestionsCallback]);
 
   const questionSelect = ({ questionID, questionLabel }) => (answer) => {
     setLoading(true);
