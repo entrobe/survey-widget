@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import SurveySpinner from "./SurveySpinner/SurveySpinner";
 import SurveyQuestion from "./SurveyQuestions/SurveyQuestion";
-
 import SurveyStepper from "./SurveyStepper/SurveyStepper";
+import StepDone from "./Steps/StepDone";
 
 import "./SurveyComponent.css";
 
@@ -65,15 +65,15 @@ const SurveyComponent = (props) => {
     fetchAnswersAndQuestionsCallback(true);
   }, []);
 
-  const questionSelect = ({ questionID, questionLabel }) => (event) => {
+  const questionSelect = ({ questionID, questionLabel }) => (answer) => {
     setLoading(true);
-    const answer = {
+    const answerBody = {
       uid: userID,
       surveyID,
       OrganizationID,
       questionID,
       questionLabel,
-      answer: event.target.value,
+      answer,
     };
 
     fetch(apiUrl + "/answer", {
@@ -82,7 +82,7 @@ const SurveyComponent = (props) => {
         "Content-Type": "application/json",
         ...externalHeaders
       },
-      body: JSON.stringify(answer),
+      body: JSON.stringify(answerBody),
     })
       .then(() => fetchAnswersAndQuestionsCallback())
       .catch(() => {
@@ -94,7 +94,7 @@ const SurveyComponent = (props) => {
     <div
       className={
         "survey-widget " +
-        (isDone || currentStep === steps ? "survey-widget--completed" : "")
+        (isDone || currentStep === steps ? "survey-widget--completed" : "survey-widget--progress")
       }
     >
       {loading && <SurveySpinner />}
@@ -115,6 +115,7 @@ const SurveyComponent = (props) => {
                     {question.label}
                   </h5>
                   <SurveyQuestion
+                    required={Boolean(question.required)}
                     type={question.type}
                     questionID={question.id}
                     options={question.options}
@@ -135,7 +136,7 @@ const SurveyComponent = (props) => {
           {currentStep === steps && !isDone && (
             <div className="survey-widget__message">Thank You</div>
           )}
-          {isDone && <div className="survey-widget__message">Done</div>}
+          {isDone && <StepDone/>}
         </>
       )}
     </div>

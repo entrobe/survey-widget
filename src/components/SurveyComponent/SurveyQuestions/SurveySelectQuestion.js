@@ -10,7 +10,7 @@ const SurveySelectQuestion = (props) => {
         className="survey-widget__select"
         name={questionID}
         defaultValue="survey-widget-placeholder"
-        onChange={onSelect}
+        onChange={(event) => onSelect(event.target.value)}
       >
         <option disabled value="survey-widget-placeholder">Please select the answer</option>
         {options.map((option, index) => (

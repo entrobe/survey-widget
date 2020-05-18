@@ -13,7 +13,7 @@ const SurveyRadioQuestion = (props) => {
             id={questionID + index}
             name={questionID}
             value={option}
-            onChange={onSelect}
+            onChange={(event) => onSelect(event.target.value)}
           />
           <label htmlFor={questionID + index}>{option}</label>
         </p>
