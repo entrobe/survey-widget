@@ -6,6 +6,7 @@ const OrganizationID = "F824Bb7abtQpvv07kjrX";
 const surveyID = "qpSogKlTVVQSTgJ5Aakb";
 const userID = "1wewd9asdasdnas9as";
 const apiUrl = process.env.REACT_APP_FIREBASE_API_URL;
+const apiKey = 67890;
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -13,7 +14,12 @@ const Home = () => {
   function refreshWidget() {
     setLoading(true);
     const uri = `/answer?OrganizationID=${OrganizationID}&surveyID=${surveyID}&userID=${userID}`;
-    fetch(apiUrl + uri, { method: "DELETE" }).finally(() => {
+    fetch(apiUrl + uri, { 
+      method: "DELETE",
+      headers: {
+        'X-API-KEY': apiKey
+      }
+     }).finally(() => {
       setLoading(false);
     });
   }
@@ -34,6 +40,9 @@ const Home = () => {
             surveyID={surveyID}
             userID={userID}
             apiUrl={apiUrl}
+            headers={{
+              'X-API-KEY': apiKey
+            }}
           />
         </div>
       )}

@@ -7,7 +7,9 @@ import SurveyStepper from "./SurveyStepper/SurveyStepper";
 import "./SurveyComponent.css";
 
 const SurveyComponent = (props) => {
-  const { OrganizationID, surveyID, userID, apiUrl } = props;
+  const { OrganizationID, surveyID, userID, apiUrl, headers } = props;
+
+  const externalHeaders = typeof headers === 'object' ? headers : {};
 
   const [survey, setSurvey] = useState(null);
   const [steps, setSteps] = useState(0);
@@ -19,10 +21,14 @@ const SurveyComponent = (props) => {
     setLoading(true);
     const surveyUri = `/survey?OrganizationID=${OrganizationID}&surveyID=${surveyID}`;
     const answerUri = `/answer?OrganizationID=${OrganizationID}&surveyID=${surveyID}&userID=${userID}`;
-
+    
     const [survey, answer] = await Promise.all(
       [surveyUri, answerUri].map((uri) =>
-        fetch(apiUrl + uri).then((res) => res.json())
+        fetch(apiUrl + uri, {
+          headers: {
+            ...externalHeaders
+          },
+        }).then((res) => res.json())
       )
     );
 
@@ -74,6 +80,7 @@ const SurveyComponent = (props) => {
       method: "post",
       headers: {
         "Content-Type": "application/json",
+        ...externalHeaders
       },
       body: JSON.stringify(answer),
     })
