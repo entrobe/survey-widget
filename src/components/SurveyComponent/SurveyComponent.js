@@ -59,15 +59,15 @@ const SurveyComponent = (props) => {
     fetchAnswersAndQuestionsCallback(true);
   }, []);
 
-  const questionSelect = ({ questionID, questionLabel }) => (event) => {
+  const questionSelect = ({ questionID, questionLabel }) => (answer) => {
     setLoading(true);
-    const answer = {
+    const answerBody = {
       uid: userID,
       surveyID,
       OrganizationID,
       questionID,
       questionLabel,
-      answer: event.target.value,
+      answer,
     };
 
     fetch(apiUrl + "/answer", {
@@ -75,7 +75,7 @@ const SurveyComponent = (props) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(answer),
+      body: JSON.stringify(answerBody),
     })
       .then(() => fetchAnswersAndQuestionsCallback())
       .catch(() => {
