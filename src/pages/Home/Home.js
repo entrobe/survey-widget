@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import SurveyComponent from "../../components/SurveyComponent/SurveyComponent";
 import "./Home.css";
 
-const OrganizationID = "F824Bb7abtQpvv07kjrX";
+const OrganizationID = "Daz2JR4ofnZo9mO";
 const surveyID = "qpSogKlTVVQSTgJ5Aakb";
-const userID = "1wewd9asdasdnas9as";
+const userID = "ukBBn1Iedzl9GOjUDHtI";
 const apiUrl = process.env.REACT_APP_FIREBASE_API_URL;
 const apiKey = 67890;
 
